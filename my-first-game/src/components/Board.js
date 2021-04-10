@@ -1,24 +1,29 @@
 import React, { 
-    // useState 
+    useState 
 } from 'react';
 import './Board.css';
 import Tile from './Tile.js';
 
 const Board = (props) => {
 
-    
-    const tiles = [
+    const [tiles, setTiles] = useState([
         [null, null, null],
         [null, null, null],
         [null, null, null],
-    ];
+    ]);
+
+    const handler = (coordinates) => {
+        const newTiles = [...tiles];
+        newTiles[coordinates.y][coordinates.x] = 'X';
+        setTiles(newTiles);
+    }
 
     return (
         <div className="Container">
             <div className="Board">
                 {tiles.map(
-                    row => row.map(
-                        tile => (<Tile />)
+                    (row, y) => row.map(
+                        (tile, x) => (<Tile handler={handler} coordinates={{x, y}} mark={tile}/>)
                     )
                 )}
             </div>

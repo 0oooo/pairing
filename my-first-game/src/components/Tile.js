@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Tile.css';
 
 const Tile = (props) => {
-    const [currentMark, setCurrentMark] = useState('Click me');
 
-    const onClickHandler = (event) => {
-        setCurrentMark(props.mark);
+    const clickHandler = () => {
+        props.handler(props.coordinates);
     }
-
+    
     return (
-        <div onClick = { onClickHandler } className="Tile" >
-            {currentMark}
+        <div onClick = {clickHandler} className="Tile" >
+            {props.mark}
         </div>
     );
 }
