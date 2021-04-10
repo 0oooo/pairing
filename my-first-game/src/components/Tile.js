@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Tile.css';
 
 const Tile = (props) => {
     const [currentMark, setCurrentMark] = useState('Click me');
@@ -8,7 +9,7 @@ const Tile = (props) => {
     }
 
     return (
-        <div onClick = { onClickHandler } style={{border:"1px solid blue", width: 40 + 'px', height:40 + 'px'}}>
+        <div onClick = { onClickHandler } className="Tile" >
             {currentMark}
         </div>
     );
