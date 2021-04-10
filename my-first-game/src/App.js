@@ -1,11 +1,11 @@
 import './App.css';
-import Tile from './components/Tile';
+import Board from './components/Board';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">Tic Tac Toe</header>
-      <Tile mark="X"></Tile>
+      <Board></Board>
     </div>
   );
 }

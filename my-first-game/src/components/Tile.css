@@ -1,5 +1,11 @@
 .Tile {
-    border: 1px solid blue; 
-    width: 60px; 
-    height: 60px;
+    background-color: #444;
+    color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    font-size: 150%;
+    cursor: pointer; 
 }
+
+  
+  
