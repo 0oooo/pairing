@@ -18,11 +18,42 @@ const Board = (props) => {
         [null, null, null],
     ]);
 
+    const [rows, setRows] = useState({
+        0: {
+            X : 0, 
+            O: 0,
+        },
+        1: {
+            X : 0, 
+            O: 0,
+        },
+        2: {
+            X : 0, 
+            O: 0,
+        } 
+    }); 
+
     const handler = (coordinates) => {
         const newTiles = [...tiles];
         newTiles[coordinates.y][coordinates.x] = player;
-        setPlayer(player === players.x ? players.o : players.x);
         setTiles(newTiles);
+
+        if(checkWinner(coordinates.y)){
+            console.log("Winner is ", player);
+            return; 
+        }
+        
+        const newRows = rows;
+        newRows[coordinates.y][player]++; 
+        setRows(newRows); 
+        console.log("rows = ", rows);
+
+        setPlayer(player === players.x ? players.o : players.x);
+    }
+
+    const checkWinner = (row) => {
+        if(rows[row][player] === 2) return true; 
+        return false
     }
 
     return (
