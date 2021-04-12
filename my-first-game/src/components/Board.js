@@ -4,7 +4,13 @@ import React, {
 import './Board.css';
 import Tile from './Tile.js';
 
-const Board = (props) => {
+const Board = (props) => { 
+
+    const players = {
+        x: 'X', 
+        o: 'O',
+    }
+    const [player, setPlayer] = useState(players.x);
 
     const [tiles, setTiles] = useState([
         [null, null, null],
@@ -14,7 +20,8 @@ const Board = (props) => {
 
     const handler = (coordinates) => {
         const newTiles = [...tiles];
-        newTiles[coordinates.y][coordinates.x] = 'X';
+        newTiles[coordinates.y][coordinates.x] = player;
+        setPlayer(player === players.x ? players.o : players.x);
         setTiles(newTiles);
     }
 

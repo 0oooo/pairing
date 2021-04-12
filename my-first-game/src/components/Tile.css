@@ -5,6 +5,7 @@
     padding: 20px;
     font-size: 150%;
     cursor: pointer; 
+    min-height: 69px; 
 }
 
   
