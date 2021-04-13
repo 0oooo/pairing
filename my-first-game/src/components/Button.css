@@ -1,0 +1,10 @@
+.Button{
+    min-width: 100px; 
+    min-height: 40px; 
+    font-size: 18px; 
+    font-family: Helvetica; 
+    color: rgb(2, 52, 65);
+    margin: 16px;
+    border-radius: 5px;
+    cursor: pointer; 
+}

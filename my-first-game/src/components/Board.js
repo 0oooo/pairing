@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import './Board.css';
 import Tile from './Tile.js';
+import Button from './Button.js';
 import uuid from 'react-uuid';
 
 const Board = (props) => { 
@@ -64,6 +65,8 @@ const Board = (props) => {
 
     const diagonalsSet = new Set(["[0, 0]", "[0, 2]", "[1, 1]", "[2, 0]", "[2, 2]"]);
 
+    const winningMessage = "And the winner is player ";
+
     const drawGame = (coordinates) => {
         const newTiles = [...tiles];
         newTiles[coordinates.y][coordinates.x] = player;
@@ -108,11 +111,23 @@ const Board = (props) => {
     }
 
     const setWinner = () =>{
+        const winner = winningMessage + player; 
         document.getElementById("winner").style.display = 'block';
-        document.getElementById("winner").innerHTML += " " + player;
+        document.getElementById("winner").innerHTML += winner;
     }
 
-    const handler = (coordinates) => {
+    const checkWinner = (coordinates) => {
+        if(rows[coordinates.y][player] === 2) return true
+        
+        if(columns[coordinates.x][player] === 2) return true;  
+
+        if(isDiagonal1(coordinates) && diagonals[0][player] === 2) return true; 
+        if(isDiagonal2(coordinates) && diagonals[1][player] === 2) return true; 
+        
+        return false
+    }
+
+    const playHandler = (coordinates) => {
         if(play){
             if(!canPlay(coordinates)) return 
             drawGame(coordinates); 
@@ -130,15 +145,62 @@ const Board = (props) => {
         }
     }
 
-    const checkWinner = (coordinates) => {
-        if(rows[coordinates.y][player] === 2) return true
-        
-        if(columns[coordinates.x][player] === 2) return true;  
+    const buttonHandler = () => {
 
-        if(isDiagonal1(coordinates) && diagonals[0][player] === 2) return true; 
-        if(isDiagonal2(coordinates) && diagonals[1][player] === 2) return true; 
-        
-        return false
+        const newTiles = [
+            [null, null, null],
+            [null, null, null],
+            [null, null, null],
+        ]; 
+        setTiles(newTiles);
+
+        const newRows = {
+            0: {
+                X : 0, 
+                O: 0,
+            },
+            1: {
+                X : 0, 
+                O: 0,
+            },
+            2: {
+                X : 0, 
+                O: 0,
+            } 
+        };
+        setRows(newRows);
+    
+        const newColumns = {
+            0: {
+                X : 0, 
+                O: 0,
+            },
+            1: {
+                X : 0, 
+                O: 0,
+            },
+            2: {
+                X : 0, 
+                O: 0,
+            } 
+        }; 
+        setColumns(newColumns);
+
+        const newDiagonals = {
+            0: {
+                X : 0, 
+                O: 0,
+            }, 
+            1: {
+                X : 0, 
+                O: 0,
+            }, 
+        };
+        setDiagonals(newDiagonals);
+        setPlayer(players.x);
+        setPlay(true);
+        document.getElementById("winner").style.display = 'none';
+        document.getElementById("winner").innerHTML = ''; 
     }
 
     return (
@@ -146,13 +208,13 @@ const Board = (props) => {
             <div className="Board">
                 {tiles.map(
                     (row, y) => row.map(
-                        (tile, x) => (<Tile key={uuid()} handler={handler} coordinates={{x, y}} mark={tile}/>)
+                        (tile, x) => (<Tile key={uuid()} handler={playHandler} coordinates={{x, y}} mark={tile}/>)
                     )
                 )}
             </div>
             <div id="winner" className="Winner">
-                And the winner is player
             </div>
+            <Button message="Play again" handler={buttonHandler}/>
         </div>
     );
 }
